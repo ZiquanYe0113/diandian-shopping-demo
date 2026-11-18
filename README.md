@@ -4,6 +4,8 @@
 
 ## 在线交互小样
 
+[打开四入口在线 Demo](https://ziquanye0113.github.io/diandian-shopping-demo/)
+
 静态小样位于 [demo](demo/)，保留四个入口，仅收录 WH-CH720N，不调用模型、不需要密钥。公开仓库启用 GitHub Pages 后即可在线体验。它用于展示预置交互与单商品约束，不等于完整 Agent 的实时理解能力。
 
 本地可运行 `python -m http.server 8000 --directory demo`，打开 `http://localhost:8000`。通过 `python scripts/build_demo.py` 重建小样。
