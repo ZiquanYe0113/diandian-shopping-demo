@@ -1,0 +1,53 @@
+{
+  "notes": [
+    {
+      "note_id": "curated:sport-earclip",
+      "title": "求推荐一款耳夹式耳机",
+      "text": "",
+      "author": "六边形吃货",
+      "curated": true,
+      "source_note_id": "xhs:69454b37000000000d0362bd",
+      "source_url": "https://www.xiaohongshu.com/explore/69454b37000000000d0362bd",
+      "source_author": "六边形吃货",
+      "original_title": "求推荐一款耳夹式耳机",
+      "checked_at": "2026-10-15",
+      "product_ids": [],
+      "topic": "运动选型",
+      "cover_tone": "mint"
+    },
+    {
+      "note_id": "curated:ch720n-comfort-anc",
+      "title": "索尼Ch720降噪约等于无",
+      "text": "",
+      "author": "momo",
+      "curated": true,
+      "source_note_id": "xhs:6ac8504000000000130187ec",
+      "source_url": "https://www.xiaohongshu.com/explore/6ac8504000000000130187ec",
+      "source_author": "momo",
+      "original_title": "索尼Ch720降噪约等于无",
+      "checked_at": "2026-10-15",
+      "product_ids": [
+        "H005"
+      ],
+      "topic": "佩戴与降噪",
+      "cover_tone": "rose"
+    },
+    {
+      "note_id": "curated:ch720n-lightweight",
+      "title": "最轻的头戴耳机——索尼WH-CH720n学生测评",
+      "text": "",
+      "author": "我是猫",
+      "curated": true,
+      "source_note_id": "xhs:6a9fdc3f00000000260143f8",
+      "source_url": "https://www.xiaohongshu.com/explore/6a9fdc3f00000000260143f8",
+      "source_author": "我是猫",
+      "original_title": "最轻的头戴耳机——索尼WH-CH720n学生测评",
+      "checked_at": "2026-10-15",
+      "product_ids": [
+        "H005"
+      ],
+      "topic": "轻量头戴",
+      "cover_tone": "blue"
+    }
+  ]
+}

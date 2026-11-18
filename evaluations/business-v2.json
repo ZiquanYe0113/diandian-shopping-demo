@@ -1,0 +1,1071 @@
+{
+  "version": "2.0",
+  "purpose": "三入口业务链路；32回归+4留出表达，独立会话，无外部笔记抓取，语义需复核",
+  "cases": [
+    {
+      "id": "B01",
+      "title": "耳机先问整体需求，预算回答即推荐",
+      "split": "regression",
+      "tags": [
+        "CHAT"
+      ],
+      "turns": [
+        {
+          "entry": "CHAT",
+          "message": "想买耳机",
+          "expected": {
+            "statuses": [
+              "CLARIFY"
+            ],
+            "no_products": true
+          }
+        },
+        {
+          "entry": "CHAT",
+          "message": "2000",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1,
+            "requirements": {
+              "budget_max": 2000
+            },
+            "followup_excludes": [
+              "预算"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "B02",
+      "title": "预算未定仍可先浏览",
+      "split": "regression",
+      "tags": [
+        "CHAT"
+      ],
+      "turns": [
+        {
+          "entry": "CHAT",
+          "message": "耳机",
+          "expected": {
+            "statuses": [
+              "CLARIFY"
+            ],
+            "no_products": true
+          }
+        },
+        {
+          "entry": "CHAT",
+          "message": "没想好，先看看",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1,
+            "requirements": {
+              "budget_deferred": true,
+              "budget_unlimited": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B03",
+      "title": "已知预算不重复追问",
+      "split": "regression",
+      "tags": [
+        "CHAT"
+      ],
+      "turns": [
+        {
+          "entry": "CHAT",
+          "message": "1000元耳机",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1,
+            "requirements": {
+              "budget_max": 1000
+            },
+            "followup_excludes": [
+              "预算"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "B04",
+      "title": "运动和软偏好跨轮保留",
+      "split": "regression",
+      "tags": [
+        "CHAT"
+      ],
+      "turns": [
+        {
+          "entry": "CHAT",
+          "message": "耳机，预算1000元，运动用",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1
+          }
+        },
+        {
+          "entry": "CHAT",
+          "message": "入耳式，看重续航",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1,
+            "requirements": {
+              "budget_max": 1000,
+              "use_case": "运动"
+            },
+            "followup_excludes": [
+              "佩戴方式"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "B05",
+      "title": "香水花香回答不反复追问",
+      "split": "regression",
+      "tags": [
+        "CHAT"
+      ],
+      "turns": [
+        {
+          "entry": "CHAT",
+          "message": "香水，预算1500，通勤",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1
+          }
+        },
+        {
+          "entry": "CHAT",
+          "message": "花香",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1,
+            "followup_excludes": [
+              "香调"
+            ],
+            "preference_values": [
+              {
+                "value": "花香",
+                "polarity": "prefer"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "B06",
+      "title": "预算修改保留场景",
+      "split": "regression",
+      "tags": [
+        "CHAT"
+      ],
+      "turns": [
+        {
+          "entry": "CHAT",
+          "message": "2000元通勤耳机",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1
+          }
+        },
+        {
+          "entry": "CHAT",
+          "message": "改成700元以内",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1,
+            "requirements": {
+              "budget_max": 700,
+              "use_case": "通勤"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B07",
+      "title": "品类切换清除旧要求",
+      "split": "regression",
+      "tags": [
+        "CHAT"
+      ],
+      "turns": [
+        {
+          "entry": "CHAT",
+          "message": "1500元通勤香水，喜欢木质",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1
+          }
+        },
+        {
+          "entry": "CHAT",
+          "message": "换成耳机，500以内运动用",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1,
+            "requirements": {
+              "category": "耳机",
+              "budget_max": 500,
+              "use_case": "运动"
+            },
+            "category": "耳机"
+          }
+        }
+      ]
+    },
+    {
+      "id": "B08",
+      "title": "严格低预算不强推",
+      "split": "regression",
+      "tags": [
+        "CHAT"
+      ],
+      "turns": [
+        {
+          "entry": "CHAT",
+          "message": "50元以内香水",
+          "expected": {
+            "statuses": [
+              "NO_RESULT"
+            ],
+            "no_products": true,
+            "alternatives_min": 1,
+            "answer_excludes": [
+              "P001",
+              "P002"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "B09",
+      "title": "预算不限不伪造上限",
+      "split": "regression",
+      "tags": [
+        "CHAT"
+      ],
+      "turns": [
+        {
+          "entry": "CHAT",
+          "message": "预算不限，通勤耳机",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1,
+            "requirements": {
+              "budget_unlimited": true,
+              "budget_max": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B10",
+      "title": "硬性降噪筛选",
+      "split": "regression",
+      "tags": [
+        "CHAT"
+      ],
+      "turns": [
+        {
+          "entry": "CHAT",
+          "message": "1000元以内耳机，必须支持主动降噪",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1,
+            "forbidden_ids": [
+              "H004",
+              "H006"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "B11",
+      "title": "询价不受购买预算误拦截",
+      "split": "regression",
+      "tags": [
+        "CHAT"
+      ],
+      "turns": [
+        {
+          "entry": "CHAT",
+          "message": "AirPods Pro 3多少钱？预算1000",
+          "expected": {
+            "statuses": [
+              "QA"
+            ],
+            "required_ids": [
+              "H003"
+            ],
+            "answer_contains": [
+              "1899"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "B12",
+      "title": "换一批不撞已推荐商品",
+      "split": "regression",
+      "tags": [
+        "CHAT"
+      ],
+      "turns": [
+        {
+          "entry": "CHAT",
+          "message": "2000元耳机",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1
+          }
+        },
+        {
+          "entry": "CHAT",
+          "message": "换一批别的",
+          "expected": {
+            "statuses": [
+              "READY",
+              "NO_RESULT"
+            ],
+            "answer_excludes": [
+              "轮追问上限"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "B13",
+      "title": "品牌搜索直接出多款",
+      "split": "regression",
+      "tags": [
+        "SEARCH"
+      ],
+      "turns": [
+        {
+          "entry": "SEARCH",
+          "message": "苹果耳机",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "B14",
+      "title": "系列搜索直接出多款",
+      "split": "regression",
+      "tags": [
+        "SEARCH"
+      ],
+      "turns": [
+        {
+          "entry": "SEARCH",
+          "message": "AirPods",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "B15",
+      "title": "型号搜索无需先问预算",
+      "split": "regression",
+      "tags": [
+        "SEARCH"
+      ],
+      "turns": [
+        {
+          "entry": "SEARCH",
+          "message": "Sony WH-CH720N",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1,
+            "required_ids": [
+              "H005"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "B16",
+      "title": "搜索千元预算识别",
+      "split": "regression",
+      "tags": [
+        "SEARCH"
+      ],
+      "turns": [
+        {
+          "entry": "SEARCH",
+          "message": "一千元香水",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1,
+            "requirements": {
+              "budget_max": 1000
+            },
+            "followup_excludes": [
+              "预算"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "B17",
+      "title": "搜索品牌后补预算保留范围",
+      "split": "regression",
+      "tags": [
+        "SEARCH"
+      ],
+      "turns": [
+        {
+          "entry": "SEARCH",
+          "message": "苹果的耳机",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 2
+          }
+        },
+        {
+          "entry": "SEARCH",
+          "message": "1000以内",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1,
+            "required_ids": [
+              "H001"
+            ],
+            "forbidden_ids": [
+              "H002",
+              "H003",
+              "H008"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "B18",
+      "title": "型号超过预算给条件式替代",
+      "split": "regression",
+      "tags": [
+        "SEARCH"
+      ],
+      "turns": [
+        {
+          "entry": "SEARCH",
+          "message": "1000元以内 AirPods Pro 3",
+          "expected": {
+            "statuses": [
+              "NO_RESULT"
+            ],
+            "no_products": true,
+            "alternatives_min": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "B19",
+      "title": "排除品牌持续有效",
+      "split": "regression",
+      "tags": [
+        "SEARCH"
+      ],
+      "turns": [
+        {
+          "entry": "SEARCH",
+          "message": "2000元耳机，不要苹果",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1,
+            "forbidden_ids": [
+              "H001",
+              "H002",
+              "H003",
+              "H008"
+            ]
+          }
+        },
+        {
+          "entry": "SEARCH",
+          "message": "通勤用",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1,
+            "forbidden_ids": [
+              "H001",
+              "H002",
+              "H003",
+              "H008"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "B20",
+      "title": "收藏知识不误导购",
+      "split": "regression",
+      "tags": [
+        "SEARCH"
+      ],
+      "turns": [
+        {
+          "entry": "SEARCH",
+          "message": "香水应该怎么保存",
+          "expected": {
+            "statuses": [
+              "CONTENT"
+            ],
+            "no_products": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "B21",
+      "title": "未知型号不替换成相近型号",
+      "split": "regression",
+      "tags": [
+        "SEARCH"
+      ],
+      "turns": [
+        {
+          "entry": "SEARCH",
+          "message": "推荐索尼WH-CH9999耳机",
+          "expected": {
+            "statuses": [
+              "NO_RESULT"
+            ],
+            "no_products": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "B22",
+      "title": "撤销降噪偏好",
+      "split": "regression",
+      "tags": [
+        "SEARCH"
+      ],
+      "turns": [
+        {
+          "entry": "SEARCH",
+          "message": "1000元耳机，必须主动降噪",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1
+          }
+        },
+        {
+          "entry": "SEARCH",
+          "message": "取消降噪要求，其他保持",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1,
+            "requirements": {
+              "budget_max": 1000
+            },
+            "requirements_empty": [
+              "attribute_filters",
+              "preference_constraints"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "B23",
+      "title": "硬入耳条件而非头戴",
+      "split": "regression",
+      "tags": [
+        "SEARCH"
+      ],
+      "turns": [
+        {
+          "entry": "SEARCH",
+          "message": "1000元内耳机，必须入耳式",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1,
+            "forbidden_ids": [
+              "H001",
+              "H002",
+              "H004",
+              "H005",
+              "H008"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "B24",
+      "title": "非购物不推荐",
+      "split": "regression",
+      "tags": [
+        "SEARCH"
+      ],
+      "turns": [
+        {
+          "entry": "SEARCH",
+          "message": "给我写一首诗",
+          "expected": {
+            "statuses": [
+              "OUT_OF_SCOPE"
+            ],
+            "no_products": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "B25",
+      "title": "普通生活笔记无商品",
+      "split": "regression",
+      "tags": [
+        "NOTE"
+      ],
+      "turns": [
+        {
+          "entry": "NOTE",
+          "message": "帮我总结这篇笔记。",
+          "expected": {
+            "statuses": [
+              "NOTE_SUMMARY"
+            ],
+            "no_products": true,
+            "points_max": 3,
+            "mention_max": 0,
+            "resolved_max": 0
+          },
+          "note_action": "summary",
+          "note_context": {
+            "note_id": "business:life",
+            "title": "海边散步",
+            "text": "今天和朋友去海边散步，晚霞很漂亮，心情很放松。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "B26",
+      "title": "已知耳机正文自动提取",
+      "split": "regression",
+      "tags": [
+        "NOTE"
+      ],
+      "turns": [
+        {
+          "entry": "NOTE",
+          "message": "帮我总结这篇笔记。",
+          "expected": {
+            "statuses": [
+              "NOTE_SUMMARY"
+            ],
+            "no_products": true,
+            "points_max": 3,
+            "mention_min": 1,
+            "resolved_ids": [
+              "H005"
+            ],
+            "resolved_max": 1
+          },
+          "note_action": "summary",
+          "note_context": {
+            "note_id": "business:sony",
+            "title": "耳机随记",
+            "text": "Sony WH-CH720N，戴着挺轻，降噪效果我觉得一般。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "B27",
+      "title": "正文泛指依标题关联型号",
+      "split": "regression",
+      "tags": [
+        "NOTE"
+      ],
+      "turns": [
+        {
+          "entry": "NOTE",
+          "message": "帮我总结这篇笔记。",
+          "expected": {
+            "statuses": [
+              "NOTE_SUMMARY"
+            ],
+            "no_products": true,
+            "points_max": 3,
+            "mention_min": 1,
+            "resolved_ids": [
+              "H005"
+            ],
+            "resolved_max": 1
+          },
+          "note_action": "summary",
+          "note_context": {
+            "note_id": "business:title",
+            "title": "Sony WH-CH720N 使用记录",
+            "text": "这款耳机戴着比较轻，我觉得降噪一般。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "B28",
+      "title": "未知商品不能硬绑定",
+      "split": "regression",
+      "tags": [
+        "NOTE"
+      ],
+      "turns": [
+        {
+          "entry": "NOTE",
+          "message": "帮我总结这篇笔记。",
+          "expected": {
+            "statuses": [
+              "NOTE_SUMMARY"
+            ],
+            "no_products": true,
+            "points_max": 3,
+            "mention_min": 1,
+            "resolved_max": 0
+          },
+          "note_action": "summary",
+          "note_context": {
+            "note_id": "business:unknown",
+            "title": "试用记录",
+            "text": "我买了一款叫星云Z99的耳机，目前只试了一次。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "B29",
+      "title": "不混淆香水版本",
+      "split": "regression",
+      "tags": [
+        "NOTE"
+      ],
+      "turns": [
+        {
+          "entry": "NOTE",
+          "message": "帮我总结这篇笔记。",
+          "expected": {
+            "statuses": [
+              "NOTE_SUMMARY"
+            ],
+            "no_products": true,
+            "points_max": 3,
+            "forbidden_ids": [
+              "P016"
+            ]
+          },
+          "note_action": "summary",
+          "note_context": {
+            "note_id": "business:edp",
+            "title": "绿邂逅 EDP",
+            "text": "我用的是香奈儿绿邂逅 EDP，这次只是记录香气。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "B30",
+      "title": "车型代际保真",
+      "split": "regression",
+      "tags": [
+        "NOTE"
+      ],
+      "turns": [
+        {
+          "entry": "NOTE",
+          "message": "帮我总结这篇笔记。",
+          "expected": {
+            "statuses": [
+              "NOTE_SUMMARY"
+            ],
+            "no_products": true,
+            "points_max": 3,
+            "answer_contains": [
+              "991.2",
+              "992.1"
+            ],
+            "answer_excludes": [
+              "992.2"
+            ]
+          },
+          "note_action": "summary",
+          "note_context": {
+            "note_id": "business:car",
+            "title": "911代际比较",
+            "text": "我对比的是991.2与992.1，觉得991.2更适合我。没有写具体价格。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "B31",
+      "title": "负面观点不反转",
+      "split": "regression",
+      "tags": [
+        "NOTE"
+      ],
+      "turns": [
+        {
+          "entry": "NOTE",
+          "message": "帮我总结这篇笔记。",
+          "expected": {
+            "statuses": [
+              "NOTE_SUMMARY"
+            ],
+            "no_products": true,
+            "points_max": 3,
+            "resolved_ids": [
+              "H005"
+            ],
+            "answer_contains": [
+              "不推荐"
+            ]
+          },
+          "note_action": "summary",
+          "note_context": {
+            "note_id": "business:negative",
+            "title": "不推荐这副耳机",
+            "text": "Sony WH-CH720N 我不推荐：虽然轻，但我觉得降噪差，耳罩不舒服。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "B32",
+      "title": "追问不编造笔记未提供参数",
+      "split": "regression",
+      "tags": [
+        "NOTE"
+      ],
+      "turns": [
+        {
+          "entry": "NOTE",
+          "message": "帮我总结这篇笔记。",
+          "expected": {
+            "statuses": [
+              "NOTE_SUMMARY"
+            ],
+            "no_products": true,
+            "points_max": 3,
+            "resolved_ids": [
+              "H006"
+            ]
+          },
+          "note_action": "summary",
+          "note_context": {
+            "note_id": "business:follow",
+            "title": "试用随记",
+            "text": "Sony WF-C510，我每天通勤用，觉得戴着舒服。作者没有记录单次续航。"
+          }
+        },
+        {
+          "entry": "NOTE",
+          "message": "作者说单次续航多久？",
+          "expected": {
+            "statuses": [
+              "NOTE_SUMMARY"
+            ],
+            "answer_contains": [
+              "未"
+            ],
+            "points_max": 3
+          },
+          "note_action": "summary",
+          "note_context": {
+            "note_id": "business:follow",
+            "title": "试用随记",
+            "text": "Sony WF-C510，我每天通勤用，觉得戴着舒服。作者没有记录单次续航。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "H01",
+      "title": "留出表达：预算口语化",
+      "split": "holdout",
+      "tags": [
+        "CHAT"
+      ],
+      "turns": [
+        {
+          "entry": "CHAT",
+          "message": "想挑副耳机，一千块封顶，地铁上用",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1,
+            "requirements": {
+              "budget_max": 1000
+            },
+            "category": "耳机"
+          }
+        }
+      ]
+    },
+    {
+      "id": "H02",
+      "title": "留出表达：历史商品不当当前目标",
+      "split": "holdout",
+      "tags": [
+        "CHAT"
+      ],
+      "turns": [
+        {
+          "entry": "CHAT",
+          "message": "以前用苹果耳机，现在想换索尼，七百以内",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1,
+            "forbidden_ids": [
+              "H001",
+              "H002",
+              "H003",
+              "H008"
+            ],
+            "requirements": {
+              "budget_max": 700
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "H03",
+      "title": "留出表达：拒绝补充仍先推荐",
+      "split": "holdout",
+      "tags": [
+        "CHAT"
+      ],
+      "turns": [
+        {
+          "entry": "CHAT",
+          "message": "香水",
+          "expected": {
+            "statuses": [
+              "CLARIFY"
+            ],
+            "no_products": true
+          }
+        },
+        {
+          "entry": "CHAT",
+          "message": "预算1500，其他没想好，你先给几个方向",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1,
+            "requirements": {
+              "budget_max": 1500
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "H04",
+      "title": "留出表达：耳机偏好非硬阈值",
+      "split": "holdout",
+      "tags": [
+        "CHAT"
+      ],
+      "turns": [
+        {
+          "entry": "CHAT",
+          "message": "耳机预算800，电池耐用一点就好",
+          "expected": {
+            "statuses": [
+              "READY"
+            ],
+            "products_min": 1,
+            "requirements": {
+              "budget_max": 800
+            },
+            "category": "耳机"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "notes": [
+    {
+      "note_id": "local:airpods-5",
+      "title": "AirPods 5：单次续航和含盒续航怎么区分？",
+      "product_ids": [
+        "H001"
+      ],
+      "source_url": "https://www.apple.com.cn/airpods-5/specs/",
+      "text": "自建资料卡，整理官方参数，不是用户试用笔记。\nAirPods5 USB-C充电盒款支持主动降噪；开降噪单次最长4小时，关闭噪声控制最长6小时，开降噪搭配充电盒总计最长20小时。\n官网中国价格快照为999元（2026-10-15）。续航为官方测试最长值，不保证每个人的实际时长。",
+      "local_example": true,
+      "author": "点点 · 自建资料卡",
+      "images": [
+        {
+          "index": 1,
+          "src": "/web/examples/airpods-5.png"
+        }
+      ],
+      "image_total": 1,
+      "image_revision": "e3dfc600925aa3ba"
+    },
+    {
+      "note_id": "local:sony-headband",
+      "title": "CH520 与 CH720N：贴耳、包耳和降噪的差别",
+      "product_ids": [
+        "H004",
+        "H005"
+      ],
+      "source_url": "https://www.sonystyle.com.cn/products/headphone/wh_ch520/wh_ch520_feature.html",
+      "text": "自建资料卡，依据索尼中国对比表整理，不是实测体验。\nWH-CH520为贴耳式，约147g，不支持聆听主动降噪，持续音乐播放约50小时。\nWH-CH720N为包耳式，约192g，支持主动降噪；开启降噪约35小时，关闭降噪约50小时。\n官网参数不能证明主观舒适度或音质；当前未核实中国售价。",
+      "local_example": true,
+      "author": "点点 · 自建资料卡",
+      "images": [
+        {
+          "index": 1,
+          "src": "/web/examples/sony-headband.png"
+        }
+      ],
+      "image_total": 1,
+      "image_revision": "19c3814dbddc374c"
+    },
+    {
+      "note_id": "local:perfume-gardens",
+      "title": "两款花园香水的官方资料对照",
+      "product_ids": [
+        "P001",
+        "P002"
+      ],
+      "source_url": "https://www.hermes.cn/cn/zh/product/爱马仕尼罗河花园淡香水-V20397/",
+      "text": "自建资料卡，整理爱马仕官网信息，不是用户试香笔记。\n尼罗河花园 EDT 50ml，官方描述绿意与木质气息，主要原料青芒果、莲花、梧桐木。\n李先生花园 EDT 50ml，官方描述草本与花香，主要原料茉莉、金橘、佛手柑。\n2026-10-15核验两款50ml中国官网标价均为1030元；气味描述不等于不甜保证或个人留香实测。",
+      "local_example": true,
+      "author": "点点 · 自建资料卡",
+      "images": [
+        {
+          "index": 1,
+          "src": "/web/examples/perfume-gardens.png"
+        }
+      ],
+      "image_total": 1,
+      "image_revision": "22e8bb3f3d20408c"
+    }
+  ]
+}
